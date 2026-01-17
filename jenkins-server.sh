@@ -5,20 +5,18 @@
 # Jenkins Installation
 ################################################################################################
 
-apt update -y  # It will update repo 
-apt install openjdk-17-jre -y # It will install Openjdk
+sudo apt update -y  # It will update repo 
+sudo apt install fontconfig openjdk-21-jre # It will install Openjdk
 
-curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
-  /usr/share/keyrings/jenkins-keyring.asc > /dev/null  # This will update the repository for jenkins
+sudo java -version  # It will check java version
 
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-  https://pkg.jenkins.io/debian binary/ | sudo tee \
-  /etc/apt/sources.list.d/jenkins.list > /dev/null  # This will update the repository for jenkins
-
-apt-get update -y # This will update the repository
-
-apt-get install jenkins -y # This will install jenkins
-
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update
+sudo apt install jenkins -y  # It will install jenkins
 echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 #####################################################################################################
